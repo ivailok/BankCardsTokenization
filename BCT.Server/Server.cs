@@ -18,48 +18,29 @@ namespace BCT.Server
 
         private readonly TcpListener Listener;
         private readonly Thread ConnectionThread;
-        private readonly Thread[] WorkerThreads;
-        private readonly Request[] Requests;
 
         public Server()
         {
             IPAddress address = IPAddress.Parse(LocalHost);
             this.Listener = new TcpListener(address, Port);
-            this.WorkerThreads = new Thread[ActiveThreadsCount];
-            this.Requests = new Request[ActiveThreadsCount];
+            ThreadPool.SetMinThreads(4, 4);
+            ThreadPool.SetMaxThreads(100, 100);
             this.ConnectionThread = new Thread(this.Listen);
             this.ConnectionThread.Start();
         }
-
-        private int GetFreeThreadIndex()
-        {
-            for (int i = 0; i < ActiveThreadsCount; i++)
-            {
-                if (this.WorkerThreads[i] == null || !this.WorkerThreads[i].IsAlive)
-                {
-                    return i;
-                }
-            }
-            throw new InvalidOperationException("No free threads.");
-        }
-
+        
         public void Listen()
         {
             this.Listener.Start();
             while (true)
             {
                 Socket socket = this.Listener.AcceptSocket();
-                try
-                {
-                    var index = this.GetFreeThreadIndex();
-                    this.Requests[index] = new Request(socket);
-                    this.WorkerThreads[index] = new Thread(new ThreadStart(this.Requests[index].Execute));
-                    this.WorkerThreads[index].Start();
-                }
-                catch (InvalidOperationException e)
-                {
-                    // return error
-                }
+                var request = new Request(socket);
+                ThreadPool.QueueUserWorkItem(
+                    new WaitCallback(delegate (object state)
+                    {
+                        request.Execute();
+                    }), null);
             }
         }
     }
