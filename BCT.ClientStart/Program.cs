@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BCT.Data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,7 +14,18 @@ namespace BCT.ClientStart
             Client.Client client = new Client.Client();
             while (true)
             {
-                client.Send(Convert.ToInt32(Console.ReadLine()));
+                Console.Write("username: ");
+                string username = Console.ReadLine();
+                Console.Write("password: ");
+                string password = Console.ReadLine();
+                Package package = new Package();
+                package.PackageType = PackageType.Login;
+                package.Data = new LoginInfo()
+                {
+                    Username = username,
+                    Password = password
+                };
+                client.Send(package);
             }
         }
     }

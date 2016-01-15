@@ -1,8 +1,10 @@
-﻿using System;
+﻿using BCT.Data;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Sockets;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -19,6 +21,7 @@ namespace BCT.Client
         private readonly NetworkStream SocketStream;
         private readonly BinaryReader Reader;
         private readonly BinaryWriter Writer;
+        private readonly BinaryFormatter Formatter;
 
         public Client()
         {
@@ -26,6 +29,7 @@ namespace BCT.Client
             this.SocketStream = this.TcpClient.GetStream();
             this.Reader = new BinaryReader(this.SocketStream);
             this.Writer = new BinaryWriter(this.SocketStream);
+            this.Formatter = new BinaryFormatter();
             this.ConnectionThread = new Thread(new ThreadStart(this.Receive));
             this.ConnectionThread.Start();
         }
@@ -35,9 +39,9 @@ namespace BCT.Client
 
         }
 
-        public void Send(int digit)
+        public void Send(Package package)
         {
-            this.Writer.Write(digit);
+            this.Formatter.Serialize(this.SocketStream, package);
         }
     }
 }

@@ -54,6 +54,10 @@
       <Project>{db0d9316-259a-4d28-bf77-f50681b3b056}</Project>
       <Name>BCT.Client</Name>
     </ProjectReference>
+    <ProjectReference Include="..\BCT.Data\BCT.Data.csproj">
+      <Project>{9ce20b81-62aa-439f-b1e2-5f390076fbca}</Project>
+      <Name>BCT.Data</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

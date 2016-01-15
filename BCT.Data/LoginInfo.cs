@@ -6,16 +6,11 @@ using System.Threading.Tasks;
 
 namespace BCT.Data
 {
-    public enum PackageType
-    {
-        Login
-    }
-
     [Serializable]
-    public class Package
+    public class LoginInfo
     {
-        public object Data { get; set; }
+        public string Username { get; set; }
 
-        public PackageType PackageType { get; set; }
+        public string Password { get; set; }
     }
 }
