@@ -38,14 +38,19 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
-    <Reference Include="woxSerializer">
-      <HintPath>..\..\woxSerializer.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entities\User.cs" />
     <Compile Include="TokenizationService.cs" />
+    <Compile Include="UsersService.cs" />
     <Compile Include="XmlFileService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BCT.Data\BCT.Data.csproj">
+      <Project>{9ce20b81-62aa-439f-b1e2-5f390076fbca}</Project>
+      <Name>BCT.Data</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -40,7 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Request.cs" />
+    <Compile Include="RequestHandler.cs" />
     <Compile Include="Server.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -48,6 +48,10 @@
     <ProjectReference Include="..\BCT.Data\BCT.Data.csproj">
       <Project>{9ce20b81-62aa-439f-b1e2-5f390076fbca}</Project>
       <Name>BCT.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BCT.Services\BCT.Services.csproj">
+      <Project>{e135be95-7eb6-466b-8b26-f5c8a6002718}</Project>
+      <Name>BCT.Services</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

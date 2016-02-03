@@ -18,14 +18,12 @@ namespace BCT.ClientStart
                 string username = Console.ReadLine();
                 Console.Write("password: ");
                 string password = Console.ReadLine();
-                Package package = new Package();
-                package.PackageType = PackageType.Login;
-                package.Data = new LoginInfo()
+                var login = new Login()
                 {
                     Username = username,
                     Password = password
                 };
-                client.Send(package);
+                client.Send(login, RequestType.Login);
             }
         }
     }

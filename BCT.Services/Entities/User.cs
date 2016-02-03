@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BCT.Data
+namespace BCT.Services.Entities
 {
-    [Serializable]
-    public class LoginInfo
+    public class User
     {
         public string Username { get; set; }
 

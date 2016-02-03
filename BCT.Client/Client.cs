@@ -17,31 +17,36 @@ namespace BCT.Client
         private const int Port = 44500;
 
         private readonly TcpClient TcpClient;
-        private readonly Thread ConnectionThread;
+        private Thread ConnectionThread;
         private readonly NetworkStream SocketStream;
-        private readonly BinaryReader Reader;
-        private readonly BinaryWriter Writer;
         private readonly BinaryFormatter Formatter;
 
         public Client()
         {
             this.TcpClient = new TcpClient(LocalHost, Port);
             this.SocketStream = this.TcpClient.GetStream();
-            this.Reader = new BinaryReader(this.SocketStream);
-            this.Writer = new BinaryWriter(this.SocketStream);
             this.Formatter = new BinaryFormatter();
-            this.ConnectionThread = new Thread(new ThreadStart(this.Receive));
+        }
+
+        public void Send(object data, RequestType type)
+        {
+            Request req = new Request()
+            {
+                Data = data,
+                RequestType = type
+            };
+
+            Response response = null;
+            this.ConnectionThread = new Thread(
+                () =>
+                {
+                    this.Formatter.Serialize(this.SocketStream, req);
+                    response = this.Formatter.Deserialize(this.SocketStream) as Response;
+                });
             this.ConnectionThread.Start();
-        }
+            this.ConnectionThread.Join();
 
-        public void Receive()
-        {
-
-        }
-
-        public void Send(Package package)
-        {
-            this.Formatter.Serialize(this.SocketStream, package);
+            Console.WriteLine(response.Message);
         }
     }
 }
