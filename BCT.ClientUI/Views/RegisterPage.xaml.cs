@@ -33,17 +33,8 @@ namespace BCT.ClientUI.Views
 
         private async void Register(object sender, RoutedEventArgs e)
         {
-            Client.Client client;
-            if (!App.Current.Properties.Contains("Client"))
-            {
-                client = new Client.Client();
-                App.Current.Properties["Client"] = client;
-            }
-            else
-            {
-                client = App.Current.Properties["Client"] as Client.Client;
-            }
-
+            var client = App.Current.Properties["Client"] as Client.Client;
+            
             Register reg = new Register();
             reg.Username = TextBoxUsername.Text;
             reg.Password = PasswordBoxPassword.Password;

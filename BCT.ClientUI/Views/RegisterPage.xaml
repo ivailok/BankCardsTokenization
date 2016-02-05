@@ -8,14 +8,14 @@
       mc:Ignorable="d" 
       d:DesignHeight="300" d:DesignWidth="300"
       Title="Register">
-    <Grid Background="Bisque">
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
             <RowDefinition Height="11*" />
         </Grid.RowDefinitions>
         
         <DockPanel Grid.Row="0" Height="50" LastChildFill="False">
-            <TextBlock DockPanel.Dock="Right">
+            <TextBlock DockPanel.Dock="Right" Padding="0,0,10,0">
                 <Hyperlink Click="GoToLoginPage">Login</Hyperlink>
             </TextBlock>
         </DockPanel>

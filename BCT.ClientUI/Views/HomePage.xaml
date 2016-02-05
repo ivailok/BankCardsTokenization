@@ -3,13 +3,29 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:fa="http://schemas.fontawesome.io/icons/"
       xmlns:local="clr-namespace:BCT.ClientUI.Views"
       mc:Ignorable="d" 
       d:DesignHeight="300" d:DesignWidth="300"
       Title="Home">
 
-    <Grid>
-        <TextBlock Name="TextBlockUsername"></TextBlock>
-        <Button Click="Logout">Logout</Button>
-    </Grid>
+    <StackPanel Orientation="Vertical">
+        <DockPanel Name="NavContainer" LastChildFill="False">
+            <TextBlock Name="TextBlockUsername" DockPanel.Dock="Left" Padding="10,0,0,0"></TextBlock>
+            <TextBlock DockPanel.Dock="Right" Padding="0,0,10,0">
+                <Hyperlink Click="Logout">Logout</Hyperlink>
+            </TextBlock>
+        </DockPanel>
+
+        <StackPanel Orientation="Horizontal">
+            <TextBox Name="TextBoxCardNumber" Width="100" Margin="0,0,10,0"></TextBox>
+            <fa:FontAwesome Name="LoadingSpinner" Grid.Row="3" Grid.Column="1" Visibility="Collapsed" Icon="Refresh" Spin="True" Height="24" Width="24"></fa:FontAwesome>
+            <TextBox Name="TextBoxToken" Width="100" Margin="0,0,10,0"></TextBox>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal">
+            <Button Click="GetTokenByCardNumber">Card # -> Token</Button>
+            <Button Click="GetCardNumberByToken">Token -> Card #</Button>
+        </StackPanel>
+        <TextBlock Name="TextBlockError" Foreground="Red" Visibility="Collapsed"></TextBlock>
+    </StackPanel>
 </Page>

@@ -30,13 +30,58 @@ namespace BCT.ClientUI.Views
         private async void Logout(object sender, RoutedEventArgs e)
         {
             var client = App.Current.Properties["Client"] as Client.Client;
-            await client.SendAsync(null, RequestType.Logout);
 
-            client.Dispose();
-            App.Current.Properties.Remove("LoggedUser");
-            App.Current.Properties.Remove("Client");
+            var response = await client.SendAsync(null, RequestType.Logout);
 
-            this.NavigationService.Navigate(new LoginPage());
+            if (response.ResponseType == ResponseType.Success)
+            {
+                App.Current.Properties.Remove("LoggedUser");
+                this.NavigationService.Navigate(new LoginPage());
+            }
+        }
+
+        private async void GetTokenByCardNumber(object sender, RoutedEventArgs e)
+        {
+            var client = App.Current.Properties["Client"] as Client.Client;
+
+            LoadingSpinner.Visibility = Visibility.Visible;
+            TextBlockError.Visibility = Visibility.Collapsed;
+
+            var response = await client.SendAsync(TextBoxCardNumber.Text, RequestType.RegisterToken);
+
+            LoadingSpinner.Visibility = Visibility.Collapsed;
+
+            if (response.ResponseType == ResponseType.Success)
+            {
+                TextBoxToken.Text = response.Data as string;
+            }
+            else
+            {
+                TextBlockError.Visibility = Visibility.Visible;
+                TextBlockError.Text = response.Message;
+            }
+        }
+
+        private async void GetCardNumberByToken(object sender, RoutedEventArgs e)
+        {
+            var client = App.Current.Properties["Client"] as Client.Client;
+
+            LoadingSpinner.Visibility = Visibility.Visible;
+            TextBlockError.Visibility = Visibility.Collapsed;
+
+            var response = await client.SendAsync(TextBoxToken.Text, RequestType.GetCardNumber);
+
+            LoadingSpinner.Visibility = Visibility.Collapsed;
+
+            if (response.ResponseType == ResponseType.Success)
+            {
+                TextBoxCardNumber.Text = response.Data as string;
+            }
+            else
+            {
+                TextBlockError.Visibility = Visibility.Visible;
+                TextBlockError.Text = response.Message;
+            }
         }
     }
 }

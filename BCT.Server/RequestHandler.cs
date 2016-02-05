@@ -20,18 +20,21 @@ namespace BCT.Server
         private readonly BinaryWriter Writer;
         private readonly BinaryFormatter Formatter;
         private readonly UsersService UsersService;
+        private readonly TokenizationService TokenizationService;
 
-        public RequestHandler(Socket requestSocket, UsersService usersService)
+        public RequestHandler(Socket requestSocket)
         {
             this.RequestSocket = requestSocket;
             this.SocketStream = new NetworkStream(this.RequestSocket);
             this.Reader = new BinaryReader(this.SocketStream);
             this.Writer = new BinaryWriter(this.SocketStream);
             this.Formatter = new BinaryFormatter();
-            this.UsersService = usersService;
-        }
+            this.UsersService = new UsersService();
+            this.TokenizationService = new TokenizationService();
 
-        public void Execute()
+    }
+
+    public void Execute()
         {
             string username;
             if (Authorize(out username))
@@ -52,10 +55,23 @@ namespace BCT.Server
                                 }
                             case RequestType.RegisterToken:
                                 {
+                                    string token;
+                                    if (this.TokenizationService.RegisterToken(request.Data as string, out token))
+                                    {
+                                        response.Data = token;
+                                        response.Message = "Successfully registered token.";
+                                    }
+                                    else
+                                    {
+                                        throw new ArgumentException("Invalid card number.");
+                                    }
                                     break;
                                 }
                             case RequestType.GetCardNumber:
                                 {
+                                    string cardNumber = this.TokenizationService.GetCardNumber(request.Data as string);
+                                    response.Data = cardNumber;
+                                    response.Message = "Successfully taken card number.";
                                     break;
                                 }
                             case RequestType.Terminate:
@@ -79,8 +95,15 @@ namespace BCT.Server
 
                     this.Formatter.Serialize(this.SocketStream, response);
 
-                    if (request.RequestType == RequestType.Logout ||
-                        request.RequestType == RequestType.Terminate)
+                    if (request.RequestType == RequestType.Logout)
+                    {
+                        if (!Authorize(out username))
+                        {
+                            break;
+                        }
+                    }
+
+                    if (request.RequestType == RequestType.Terminate)
                     {
                         break;
                     }
@@ -120,7 +143,7 @@ namespace BCT.Server
                             }
                         case RequestType.Terminate:
                             {
-                                return false;
+                                break;
                             }
 
                     }
@@ -137,6 +160,11 @@ namespace BCT.Server
                 if (username != null)
                 {
                     break;
+                }
+
+                if (request.RequestType == RequestType.Terminate)
+                {
+                    return false;
                 }
             }
 

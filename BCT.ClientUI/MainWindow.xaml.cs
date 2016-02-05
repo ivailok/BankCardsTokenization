@@ -1,6 +1,8 @@
 ﻿using BCT.ClientUI.Views;
+using BCT.Data;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,9 +26,14 @@ namespace BCT.ClientUI
         public MainWindow()
         {
             InitializeComponent();
+            
+            Client.Client client = new Client.Client();
+            App.Current.Properties["Client"] = client;
 
             MainFrame.Navigate(new LoginPage());
             MainFrame.Navigated += FrameNavigated;
+
+            Closing += WindowClosing;
         }
 
         void FrameNavigated(object sender, NavigationEventArgs e)
@@ -36,6 +43,16 @@ namespace BCT.ClientUI
             {
                 MainFrame.NavigationService.RemoveBackEntry();
                 MainFrame.NavigationUIVisibility = NavigationUIVisibility.Hidden;
+            }
+        }
+
+        async void WindowClosing(object sender, CancelEventArgs e)
+        {
+            var client = App.Current.Properties["Client"] as Client.Client;
+            var response = await client.SendAsync(null, RequestType.Terminate) as Response;
+            if (response.ResponseType == ResponseType.Success)
+            {
+                client.Dispose();
             }
         }
     }

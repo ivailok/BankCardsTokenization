@@ -19,12 +19,9 @@ namespace BCT.Server
 
         private readonly TcpListener Listener;
         private readonly Thread ConnectionThread;
-        
-        private readonly UsersService UsersService;
 
         public Server()
         {
-            this.UsersService = new UsersService();
             IPAddress address = IPAddress.Parse(LocalHost);
             this.Listener = new TcpListener(address, Port);
             ThreadPool.SetMinThreads(4, 4);
@@ -39,7 +36,7 @@ namespace BCT.Server
             while (true)
             {
                 Socket socket = this.Listener.AcceptSocket();
-                var request = new RequestHandler(socket, this.UsersService);
+                var request = new RequestHandler(socket);
                 ThreadPool.QueueUserWorkItem(
                     new WaitCallback(delegate (object state)
                     {
