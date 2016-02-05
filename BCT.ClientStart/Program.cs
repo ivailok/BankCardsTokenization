@@ -14,16 +14,33 @@ namespace BCT.ClientStart
             Client.Client client = new Client.Client();
             while (true)
             {
-                Console.Write("username: ");
-                string username = Console.ReadLine();
-                Console.Write("password: ");
-                string password = Console.ReadLine();
-                var login = new Login()
+                int command = int.Parse(Console.ReadLine());
+                if (command == 1)
                 {
-                    Username = username,
-                    Password = password
-                };
-                client.Send(login, RequestType.Login);
+                    Console.Write("username: ");
+                    string username = Console.ReadLine();
+                    Console.Write("password: ");
+                    string password = Console.ReadLine();
+                    var login = new Login()
+                    {
+                        Username = username,
+                        Password = password
+                    };
+                    client.SendAsync(login, RequestType.Login);
+                }
+                else if (command == 2)
+                {
+                    Console.Write("username: ");
+                    string username = Console.ReadLine();
+                    Console.Write("password: ");
+                    string password = Console.ReadLine();
+                    var register = new Register()
+                    {
+                        Username = username,
+                        Password = password
+                    };
+                    client.SendAsync(register, RequestType.Register);
+                }
             }
         }
     }

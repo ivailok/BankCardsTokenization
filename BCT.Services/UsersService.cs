@@ -11,30 +11,51 @@ namespace BCT.Services
 {
     public class UsersService
     {
-        private XmlFileService storage;
-        private Dictionary<string, string> users;
+        private const string UsersFilename = "users.xml";
 
-        public UsersService()
+        private static XmlFileService storage;
+        private static Dictionary<string, User> users;
+
+        static UsersService()
         {
-            this.storage = new XmlFileService("users.xml");
-            this.users = new Dictionary<string, string>();
+            storage = new XmlFileService(UsersFilename);
+            users = new Dictionary<string, User>();
 
-            if (File.Exists("users.xml"))
+            if (File.Exists(UsersFilename))
             {
-                var collection = this.storage.Load(typeof(User[])) as User[];
+                var collection = storage.Load(typeof(User[])) as User[];
                 foreach (var item in collection)
                 {
-                    this.users.Add(item.Username, item.Password);
+                    users.Add(item.Username, item);
                 }
             }
         }
 
         public void Login(Login login)
         {
-            if (!this.users.ContainsKey(login.Username) || 
-                this.users[login.Username] != login.Password)
+            lock (users)
             {
-                throw new Exception("Username or password are wrong.");
+                if (!users.ContainsKey(login.Username) ||
+                users[login.Username].Password != login.Password)
+                {
+                    throw new Exception("Username or password are wrong.");
+                }
+            }
+        }
+
+        public void Register(Register register)
+        {
+            lock (users)
+            {
+                if (users.ContainsKey(register.Username))
+                {
+                    throw new Exception("Username taken.");
+                }
+                else
+                {
+                    users.Add(register.Username, new User() { Username = register.Username, Password = register.Password });
+                    storage.Save(users.Values.ToArray(), typeof(User[]));
+                }
             }
         }
     }

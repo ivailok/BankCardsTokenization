@@ -11,13 +11,12 @@ using System.Threading.Tasks;
 
 namespace BCT.Client
 {
-    public class Client
+    public class Client : IDisposable
     {
         private const string LocalHost = "127.0.0.1";
         private const int Port = 44500;
 
         private readonly TcpClient TcpClient;
-        private Thread ConnectionThread;
         private readonly NetworkStream SocketStream;
         private readonly BinaryFormatter Formatter;
 
@@ -28,7 +27,7 @@ namespace BCT.Client
             this.Formatter = new BinaryFormatter();
         }
 
-        public void Send(object data, RequestType type)
+        public Task<Response> SendAsync(object data, RequestType type)
         {
             Request req = new Request()
             {
@@ -36,17 +35,17 @@ namespace BCT.Client
                 RequestType = type
             };
 
-            Response response = null;
-            this.ConnectionThread = new Thread(
-                () =>
-                {
-                    this.Formatter.Serialize(this.SocketStream, req);
-                    response = this.Formatter.Deserialize(this.SocketStream) as Response;
-                });
-            this.ConnectionThread.Start();
-            this.ConnectionThread.Join();
+            return Task.Run(() =>
+            {
+                this.Formatter.Serialize(this.SocketStream, req);
+                var response = this.Formatter.Deserialize(this.SocketStream) as Response;
+                return response;
+            });
+        }
 
-            Console.WriteLine(response.Message);
+        public void Dispose()
+        {
+            this.SocketStream.Dispose();
         }
     }
 }

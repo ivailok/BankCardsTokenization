@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace BCT.Server
 {
-    public class RequestHandler
+    public class RequestHandler : IDisposable
     {
         private readonly Socket RequestSocket;
         private readonly NetworkStream SocketStream;
@@ -33,42 +33,96 @@ namespace BCT.Server
 
         public void Execute()
         {
+            string username;
+            if (Authorize(out username))
+            {
+                while (true)
+                {
+                    Request request = this.Formatter.Deserialize(this.SocketStream) as Request;
+
+                    Response response = new Response();
+                    try
+                    {
+                        switch (request.RequestType)
+                        {
+                            case RequestType.Logout:
+                                {
+                                    response.Message = "Successfully logged out.";
+                                    break;
+                                }
+                            case RequestType.RegisterToken:
+                                {
+                                    break;
+                                }
+                            case RequestType.GetCardNumber:
+                                {
+                                    break;
+                                }
+                            case RequestType.Terminate:
+                                {
+                                    response.Message = "Successfully terminated.";
+                                    break;
+                                }
+                            default:
+                                {
+                                    throw new InvalidOperationException(
+                                        string.Format("Operation {0} is not supported.", request.RequestType));
+                                }
+                        }
+                        response.ResponseType = ResponseType.Success;
+                    }
+                    catch (Exception e)
+                    {
+                        response.ResponseType = ResponseType.Error;
+                        response.Message = e.Message;
+                    }
+
+                    this.Formatter.Serialize(this.SocketStream, response);
+
+                    if (request.RequestType == RequestType.Logout ||
+                        request.RequestType == RequestType.Terminate)
+                    {
+                        break;
+                    }
+                }
+            }
+
+            this.Dispose();
+        }
+
+        public bool Authorize(out string username)
+        {
+            username = null;
             while (true)
             {
-                while (this.RequestSocket.Available == 0)
-                {
-                    Thread.Sleep(1000);
-                }
-
-                Request package = this.Formatter.Deserialize(this.SocketStream) as Request;
+                Request request = this.Formatter.Deserialize(this.SocketStream) as Request;
 
                 Response response = new Response();
                 try
                 {
-                    switch (package.RequestType)
+                    switch (request.RequestType)
                     {
                         case RequestType.Login:
                             {
-                                this.UsersService.Login((Login)package.Data);
+                                var login = request.Data as Login;
+                                this.UsersService.Login(login);
+                                username = login.Username;
                                 response.Message = "Successfully logged!";
                                 break;
                             }
                         case RequestType.Register:
                             {
+                                var reg = request.Data as Register;
+                                this.UsersService.Register(reg);
+                                username = reg.Username;
+                                response.Message = "Successfully registered!";
                                 break;
                             }
-                        case RequestType.RegisterToken:
+                        case RequestType.Terminate:
                             {
-                                break;
+                                return false;
                             }
-                        case RequestType.GetCardNumber:
-                            {
-                                break;
-                            }
-                        default:
-                            {
-                                break;
-                            }
+
                     }
                     response.ResponseType = ResponseType.Success;
                 }
@@ -77,9 +131,24 @@ namespace BCT.Server
                     response.ResponseType = ResponseType.Error;
                     response.Message = e.Message;
                 }
-                
+
                 this.Formatter.Serialize(this.SocketStream, response);
+
+                if (username != null)
+                {
+                    break;
+                }
             }
+
+            return true;
+        }
+
+        public void Dispose()
+        {
+            this.Reader.Dispose();
+            this.Writer.Dispose();
+            this.SocketStream.Dispose();
+            this.RequestSocket.Dispose();
         }
     }
 }

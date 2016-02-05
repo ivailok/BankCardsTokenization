@@ -29,8 +29,10 @@ namespace BCT.Services
         public object Load(Type type)
         {
             XmlSerializer xmlSer = new XmlSerializer(type);
-            FileStream fs = new FileStream(filename, FileMode.Open);
-            return xmlSer.Deserialize(fs);
+            using (FileStream fs = new FileStream(filename, FileMode.Open))
+            {
+                return xmlSer.Deserialize(fs);
+            }
         }
     }
 }
