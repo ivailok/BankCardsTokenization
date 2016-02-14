@@ -33,18 +33,15 @@ namespace BCT.ClientUI.Views
 
         private async void Register(object sender, RoutedEventArgs e)
         {
+            LockScreen();
+
             var client = App.Current.Properties["Client"] as Client.Client;
             
             Register reg = new Register();
             reg.Username = TextBoxUsername.Text;
             reg.Password = PasswordBoxPassword.Password;
 
-            LoadingSpinner.Visibility = Visibility.Visible;
-            TextBlockErrorMessage.Visibility = Visibility.Collapsed;
-
             var response = await client.SendAsync(reg, RequestType.Register);
-            
-            LoadingSpinner.Visibility = Visibility.Collapsed;
 
             if (response.ResponseType == ResponseType.Success)
             {
@@ -53,9 +50,29 @@ namespace BCT.ClientUI.Views
             }
             else
             {
+                UnlockScreen();
                 TextBlockErrorMessage.Visibility = Visibility.Visible;
                 TextBlockErrorMessage.Text = response.Message;
             }
+        }
+
+        private void LockScreen()
+        {
+            LoadingSpinner.Visibility = Visibility.Visible;
+            TextBlockErrorMessage.Visibility = Visibility.Collapsed;
+            BtnLogin.IsEnabled = false;
+            TextBoxUsername.IsEnabled = false;
+            PasswordBoxPassword.IsEnabled = false;
+            PasswordBoxRepeatPassword.IsEnabled = false;
+        }
+
+        private void UnlockScreen()
+        {
+            LoadingSpinner.Visibility = Visibility.Collapsed;
+            BtnLogin.IsEnabled = true;
+            TextBoxUsername.IsEnabled = true;
+            PasswordBoxPassword.IsEnabled = true;
+            PasswordBoxRepeatPassword.IsEnabled = true;
         }
     }
 }

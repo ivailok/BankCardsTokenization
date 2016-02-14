@@ -10,45 +10,55 @@
       Title="Login">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="*" />
-            <RowDefinition Height="5*"/>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
 
-        <TextBlock Grid.Row="0" TextWrapping="Wrap" Name="textBlockHeading" VerticalAlignment="Top" FontSize="12" FontStyle="Italic" Padding="5">
-            Note: Please login here to view the features of this app. If you are new then
-            <TextBlock>
-                <Hyperlink Click="GoToRegisterPage" FontSize="14" FontStyle="Normal">register</Hyperlink>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        
+        <StackPanel Orientation="Vertical" Grid.Row="1" Grid.Column="1">
+            <TextBlock Grid.Row="0" TextWrapping="Wrap" Name="textBlockHeading" VerticalAlignment="Top" FontSize="12" FontStyle="Italic" Padding="5">
+                Note: Please login here to view the features of this app. If you are new then
+                <TextBlock>
+                    <Hyperlink Click="GoToRegisterPage" FontSize="14" FontStyle="Normal">register</Hyperlink>
+                </TextBlock>
+                now.
             </TextBlock>
-            now.
-        </TextBlock>
 
-        <Grid Grid.Row="1" Margin="0,50,0,0">
+            <Grid Margin="0,50,0,0" Width="200">
 
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="5*"/>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
 
-            </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
 
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition />
-                <ColumnDefinition />
-            </Grid.ColumnDefinitions>
+                <Label Grid.Row="0" Grid.Column="0">Username:</Label>
+                <TextBox Name="TextBoxUsername" Grid.Row="0" Grid.Column="1" Margin="2"></TextBox>
 
-            <TextBlock Grid.Row="0" Grid.Column="0">Username:</TextBlock>
-            <TextBox Name="TextBoxUsername" Grid.Row="0" Grid.Column="1"></TextBox>
+                <Label Grid.Row="1" Grid.Column="0">Password:</Label>
+                <PasswordBox Name="PasswordBoxPassword" Grid.Row="1" Grid.Column="1" Margin="2"></PasswordBox>
 
-            <TextBlock Grid.Row="1" Grid.Column="0">Password:</TextBlock>
-            <PasswordBox Name="PasswordBoxPassword" Grid.Row="1" Grid.Column="1"></PasswordBox>
+                <TextBlock Name="TextBlockErrorMessage" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Visibility="Collapsed" Foreground="Red" Margin="5,2,0,2"></TextBlock>
 
-            <Button Grid.Row="2" Grid.Column="1" Click="Login">Login</Button>
+                <StackPanel Grid.Row="3" Grid.Column="0" Orientation="Horizontal">
+                    <Button Name="BtnLogin" Click="Login" Width="50px" Margin="5,0,0,0" Content="Login"/>
+                </StackPanel>
+            </Grid>
 
-            <fa:ImageAwesome Name="LoadingSpinner" Grid.Row="3" Grid.Column="1" Visibility="Collapsed" Icon="Refresh" Spin="True" Height="48" Width="48" />
-            <TextBlock Name="TextBlockErrorMessage" Grid.Row="3" Grid.Column="0" Visibility="Collapsed"></TextBlock>
-        </Grid>
+            <fa:ImageAwesome Name="LoadingSpinner" Margin="0,50,0,0" Visibility="Collapsed" Icon="Refresh" Spin="True" Height="48" Width="48" />
+        </StackPanel>
         
     </Grid>
 </Page>

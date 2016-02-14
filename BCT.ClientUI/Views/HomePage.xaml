@@ -9,7 +9,7 @@
       d:DesignHeight="300" d:DesignWidth="300"
       Title="Home">
 
-    <StackPanel Orientation="Vertical">
+    <Grid>
         <DockPanel Name="NavContainer" LastChildFill="False">
             <TextBlock Name="TextBlockUsername" DockPanel.Dock="Left" Padding="10,0,0,0"></TextBlock>
             <TextBlock DockPanel.Dock="Right" Padding="0,0,10,0">
@@ -17,15 +17,49 @@
             </TextBlock>
         </DockPanel>
 
-        <StackPanel Orientation="Horizontal">
-            <TextBox Name="TextBoxCardNumber" Width="100" Margin="0,0,10,0"></TextBox>
-            <fa:FontAwesome Name="LoadingSpinner" Grid.Row="3" Grid.Column="1" Visibility="Collapsed" Icon="Refresh" Spin="True" Height="24" Width="24"></fa:FontAwesome>
-            <TextBox Name="TextBoxToken" Width="100" Margin="0,0,10,0"></TextBox>
-        </StackPanel>
-        <StackPanel Orientation="Horizontal">
-            <Button Click="GetTokenByCardNumber">Card # -> Token</Button>
-            <Button Click="GetCardNumberByToken">Token -> Card #</Button>
-        </StackPanel>
-        <TextBlock Name="TextBlockError" Foreground="Red" Visibility="Collapsed"></TextBlock>
-    </StackPanel>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Orientation="Vertical" Grid.Row="1" Grid.Column="1" Width="250">
+                <Grid Grid.Row="1" Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+
+                    <Label Grid.Row="0" Grid.Column="0">Card ID:</Label>
+                    <TextBox Name="TextBoxCardNumber" Grid.Row="0" Grid.Column="1" Margin="2"></TextBox>
+
+                    <Label Grid.Row="1" Grid.Column="0">Token:</Label>
+                    <TextBox Name="TextBoxToken" Grid.Row="1" Grid.Column="1" Margin="2"></TextBox>
+
+                    <TextBlock Name="TextBlockError" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Visibility="Collapsed" Foreground="Red" Margin="5,2,0,2"></TextBlock>
+
+                    <StackPanel Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" Margin="0,10,0,0">
+                        <Button Name="BtnConvertCard" Click="GetTokenByCardNumber" Width="100" Margin="5,0,0,0">Card ID -> Token</Button>
+                        <Button Name="BtnConvertToken" Click="GetCardNumberByToken" Width="100" Margin="43,0,0,0">Token -> Card ID</Button>
+                    </StackPanel>
+                </Grid>
+
+                <fa:ImageAwesome Name="LoadingSpinner" Margin="0,50,0,0" Visibility="Collapsed" Icon="Refresh" Spin="True" Height="48" Width="48" />
+            </StackPanel>
+        </Grid>
+    </Grid>
 </Page>

@@ -42,14 +42,11 @@ namespace BCT.ClientUI.Views
 
         private async void GetTokenByCardNumber(object sender, RoutedEventArgs e)
         {
+            LockScreen();
+
             var client = App.Current.Properties["Client"] as Client.Client;
 
-            LoadingSpinner.Visibility = Visibility.Visible;
-            TextBlockError.Visibility = Visibility.Collapsed;
-
             var response = await client.SendAsync(TextBoxCardNumber.Text, RequestType.RegisterToken);
-
-            LoadingSpinner.Visibility = Visibility.Collapsed;
 
             if (response.ResponseType == ResponseType.Success)
             {
@@ -57,6 +54,7 @@ namespace BCT.ClientUI.Views
             }
             else
             {
+                UnlockScreen();
                 TextBlockError.Visibility = Visibility.Visible;
                 TextBlockError.Text = response.Message;
             }
@@ -64,14 +62,11 @@ namespace BCT.ClientUI.Views
 
         private async void GetCardNumberByToken(object sender, RoutedEventArgs e)
         {
+            LockScreen();
+
             var client = App.Current.Properties["Client"] as Client.Client;
 
-            LoadingSpinner.Visibility = Visibility.Visible;
-            TextBlockError.Visibility = Visibility.Collapsed;
-
             var response = await client.SendAsync(TextBoxToken.Text, RequestType.GetCardNumber);
-
-            LoadingSpinner.Visibility = Visibility.Collapsed;
 
             if (response.ResponseType == ResponseType.Success)
             {
@@ -79,9 +74,29 @@ namespace BCT.ClientUI.Views
             }
             else
             {
+                UnlockScreen();
                 TextBlockError.Visibility = Visibility.Visible;
                 TextBlockError.Text = response.Message;
             }
+        }
+
+        private void LockScreen()
+        {
+            LoadingSpinner.Visibility = Visibility.Visible;
+            TextBlockError.Visibility = Visibility.Collapsed;
+            BtnConvertCard.IsEnabled = false;
+            BtnConvertToken.IsEnabled = false;
+            TextBoxCardNumber.IsEnabled = false;
+            TextBoxToken.IsEnabled = false;
+        }
+
+        private void UnlockScreen()
+        {
+            LoadingSpinner.Visibility = Visibility.Collapsed;
+            BtnConvertCard.IsEnabled = true;
+            BtnConvertToken.IsEnabled = true;
+            TextBoxCardNumber.IsEnabled = true;
+            TextBoxToken.IsEnabled = true;
         }
     }
 }

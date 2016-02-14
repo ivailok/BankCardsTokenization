@@ -9,44 +9,60 @@
       d:DesignHeight="300" d:DesignWidth="300"
       Title="Register">
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*" />
-            <RowDefinition Height="11*" />
-        </Grid.RowDefinitions>
-        
-        <DockPanel Grid.Row="0" Height="50" LastChildFill="False">
+        <DockPanel LastChildFill="False">
             <TextBlock DockPanel.Dock="Right" Padding="0,0,10,0">
                 <Hyperlink Click="GoToLoginPage">Login</Hyperlink>
             </TextBlock>
         </DockPanel>
-        
-        <Grid Grid.Row="1" Margin="0,50,0,0">
 
+        <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="10*"/>
-
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
             </Grid.RowDefinitions>
 
             <Grid.ColumnDefinitions>
-                <ColumnDefinition />
-                <ColumnDefinition />
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
 
-            <TextBlock Grid.Row="0" Grid.Column="0">Username:</TextBlock>
-            <TextBox Name="TextBoxUsername" Grid.Row="0" Grid.Column="1"></TextBox>
+            <StackPanel Orientation="Vertical" Grid.Row="1" Grid.Column="1">
 
-            <TextBlock Grid.Row="1" Grid.Column="0">Password:</TextBlock>
-            <PasswordBox Name="PasswordBoxPassword" Grid.Row="1" Grid.Column="1"></PasswordBox>
+                <Grid Margin="0,50,0,0" Width="250">
 
-            <Button Grid.Row="2" Grid.Column="1" Click="Register">Register</Button>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
 
-            <fa:ImageAwesome Name="LoadingSpinner" Grid.Row="3" Grid.Column="1" Visibility="Collapsed" Icon="Refresh" Spin="True" Height="48" Width="48" />
-            <TextBlock Name="TextBlockErrorMessage" Grid.Row="3" Grid.Column="0" Visibility="Collapsed"></TextBlock>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+
+                    <Label Grid.Row="0" Grid.Column="0">Username:</Label>
+                    <TextBox Name="TextBoxUsername" Grid.Row="0" Grid.Column="1" Margin="2"></TextBox>
+
+                    <Label Grid.Row="1" Grid.Column="0">Password:</Label>
+                    <PasswordBox Name="PasswordBoxPassword" Grid.Row="1" Grid.Column="1" Margin="2"></PasswordBox>
+
+                    <Label Grid.Row="2" Grid.Column="0">Repeat password:</Label>
+                    <PasswordBox Name="PasswordBoxRepeatPassword" Grid.Row="2" Grid.Column="1" Margin="2"></PasswordBox>
+
+                    <TextBlock Name="TextBlockErrorMessage" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Visibility="Collapsed" Foreground="Red" Margin="5,2,0,2"></TextBlock>
+
+                    <StackPanel Grid.Row="4" Grid.Column="0" Orientation="Horizontal">
+                        <Button Name="BtnLogin" Click="Register" Width="50px" Margin="5,0,0,0" Content="Register"/>
+                    </StackPanel>
+                </Grid>
+
+                <fa:ImageAwesome Name="LoadingSpinner" Margin="0,50,0,0" Visibility="Collapsed" Icon="Refresh" Spin="True" Height="48" Width="48" />
+            </StackPanel>
         </Grid>
-
     </Grid>
 </Page>

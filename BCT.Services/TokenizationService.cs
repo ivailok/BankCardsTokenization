@@ -100,6 +100,7 @@ namespace BCT.Services
             if (string.IsNullOrEmpty(token) ||
                 !ContainsOnlyNumbers(token) ||
                 token.Length != CardLength ||
+                token[0] == '0' ||
                 (token[0] >= '3' && token[0] <= '6'))
             {
                 throw new ArgumentException("Invalid token.");
@@ -121,20 +122,23 @@ namespace BCT.Services
         private static string GeneratePossibleToken(string cardNumber)
         {
             char[] generatedToken = new char[CardLength];
+            int digitsSum = 0;
 
             int first;
             do
             {
-                first = randomGenerator.Next(0, 10);
-            } while (first >= 3 && first <= 6);
-
+                first = randomGenerator.Next(1, 10);
+            } while ((first >= 3 && first <= 6) || first == 0);
             generatedToken[0] = Digits[first];
+            digitsSum += first;
+
             for (int i = 1; i <= 4; i++)
             {
                 generatedToken[CardLength - i] = cardNumber[CardLength - i];
+                digitsSum += generatedToken[CardLength - i] - '0';
             }
 
-            for (int i = 0; i < CardLength - 4; i++)
+            for (int i = 1; i < CardLength - 5; i++)
             {
                 int d;
                 do
@@ -143,8 +147,15 @@ namespace BCT.Services
                 } while (Digits[d] == cardNumber[i]);
                 generatedToken[i] = Digits[d];
             }
+            
+            do
+            {
+                generatedToken[CardLength - 5] = Digits[randomGenerator.Next(0, 10)];
+            } while (generatedToken[CardLength - 5] == cardNumber[CardLength - 5] || 
+                    (digitsSum + generatedToken[CardLength - 5] - '0') % 10 == 0);
+            //generatedToken[i] = Digits[d];
 
             return new string(generatedToken);
-        } 
+        }
     }
 }

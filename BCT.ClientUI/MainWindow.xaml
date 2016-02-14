@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BCT.ClientUI"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525" MinHeight="350" MinWidth="525">
+        Title="Tokenization" Height="350" Width="525" MinHeight="350" MinWidth="525">
     <Grid>
         <Frame Name="MainFrame"></Frame>
     </Grid>
