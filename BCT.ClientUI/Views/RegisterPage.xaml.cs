@@ -41,6 +41,10 @@ namespace BCT.ClientUI.Views
             reg.Username = TextBoxUsername.Text;
             reg.Password = PasswordBoxPassword.Password;
 
+            int rights = (CheckBoxRegisterToken.IsChecked ?? false) ? (int)Rights.CanRegisterToken : 0;
+            rights |= ((CheckBoxGetCard.IsChecked ?? false) ? (int)Rights.CanGetCardNumber : 0);
+            reg.Rights = rights;
+
             var response = await client.SendAsync(reg, RequestType.Register);
 
             if (response.ResponseType == ResponseType.Success)

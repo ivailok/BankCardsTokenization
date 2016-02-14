@@ -53,7 +53,12 @@ namespace BCT.Services
                 }
                 else
                 {
-                    users.Add(register.Username, new User() { Username = register.Username, Password = register.Password });
+                    users.Add(register.Username, new User()
+                    {
+                        Username = register.Username,
+                        Password = register.Password,
+                        Rights = register.Rights
+                    });
                     storage.Save(users.Values.ToArray(), typeof(User[]));
                 }
             }

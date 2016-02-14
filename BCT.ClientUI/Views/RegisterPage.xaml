@@ -38,6 +38,8 @@
                         <RowDefinition />
                         <RowDefinition />
                         <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
                     </Grid.RowDefinitions>
 
                     <Grid.ColumnDefinitions>
@@ -54,9 +56,15 @@
                     <Label Grid.Row="2" Grid.Column="0">Repeat password:</Label>
                     <PasswordBox Name="PasswordBoxRepeatPassword" Grid.Row="2" Grid.Column="1" Margin="2"></PasswordBox>
 
-                    <TextBlock Name="TextBlockErrorMessage" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Visibility="Collapsed" Foreground="Red" Margin="5,2,0,2"></TextBlock>
+                    <Label Grid.Row="3" Grid.Column="0">Register token:</Label>
+                    <CheckBox Name="CheckBoxRegisterToken" Grid.Row="3" Grid.Column="1"></CheckBox>
 
-                    <StackPanel Grid.Row="4" Grid.Column="0" Orientation="Horizontal">
+                    <Label Grid.Row="4" Grid.Column="0">Get card number:</Label>
+                    <CheckBox Name="CheckBoxGetCard" Grid.Row="4" Grid.Column="1"></CheckBox>
+
+                    <TextBlock Name="TextBlockErrorMessage" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Visibility="Collapsed" Foreground="Red" Margin="5,2,0,2"></TextBlock>
+
+                    <StackPanel Grid.Row="6" Grid.Column="0" Orientation="Horizontal">
                         <Button Name="BtnLogin" Click="Register" Width="50px" Margin="5,0,0,0" Content="Register"/>
                     </StackPanel>
                 </Grid>
