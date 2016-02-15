@@ -59,6 +59,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Views\ExportPage.xaml.cs">
+      <DependentUpon>ExportPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\RegisterPage.xaml.cs">
+      <DependentUpon>RegisterPage.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -71,6 +77,14 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Views\ExportPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\RegisterPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -101,9 +115,13 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BCT.Server\BCT.Server.csproj">
+    <ProjectReference Include="..\BCT.Data\BCT.Data.csproj">
+      <Project>{9ce20b81-62aa-439f-b1e2-5f390076fbca}</Project>
+      <Name>BCT.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BCT.Server\BCT.ServerCore.csproj">
       <Project>{7996a1c3-617b-4228-94fc-673b861b742a}</Project>
-      <Name>BCT.Server</Name>
+      <Name>BCT.ServerCore</Name>
     </ProjectReference>
     <ProjectReference Include="..\BCT.Services\BCT.Services.csproj">
       <Project>{e135be95-7eb6-466b-8b26-f5c8a6002718}</Project>

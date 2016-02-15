@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace BCT.Client
+namespace BCT.ClientCore
 {
     public class Client : IDisposable
     {
@@ -37,9 +37,20 @@ namespace BCT.Client
 
             return Task.Run(() =>
             {
-                this.Formatter.Serialize(this.SocketStream, req);
-                var response = this.Formatter.Deserialize(this.SocketStream) as Response;
-                return response;
+                try
+                {
+                    this.Formatter.Serialize(this.SocketStream, req);
+                    var response = this.Formatter.Deserialize(this.SocketStream) as Response;
+                    return response;
+                }
+                catch
+                {
+                    return new Response()
+                    {
+                        ResponseType = ResponseType.Error,
+                        Message = "Server not responding. Try later."
+                    };
+                }
             });
         }
 

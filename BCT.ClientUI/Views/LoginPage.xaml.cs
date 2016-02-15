@@ -1,4 +1,5 @@
-﻿using BCT.Data;
+﻿using BCT.ClientCore;
+using BCT.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,39 +18,30 @@ using System.Windows.Shapes;
 namespace BCT.ClientUI.Views
 {
     /// <summary>
-    /// Interaction logic for RegisterPage.xaml
+    /// Interaction logic for LoginPage.xaml
     /// </summary>
-    public partial class RegisterPage : Page
+    public partial class LoginPage : Page
     {
-        public RegisterPage()
+        public LoginPage()
         {
             InitializeComponent();
         }
 
-        private void GoToLoginPage(object sender, RoutedEventArgs e)
-        {
-            this.NavigationService.Navigate(new LoginPage());
-        }
-
-        private async void Register(object sender, RoutedEventArgs e)
+        private async void Login(object sender, RoutedEventArgs e)
         {
             LockScreen();
 
-            var client = App.Current.Properties["Client"] as Client.Client;
+            var client = App.Current.Properties["Client"] as Client;
+
+            Login login = new Login();
+            login.Username = TextBoxUsername.Text;
+            login.Password = PasswordBoxPassword.Password;
             
-            Register reg = new Register();
-            reg.Username = TextBoxUsername.Text;
-            reg.Password = PasswordBoxPassword.Password;
-
-            int rights = (CheckBoxRegisterToken.IsChecked ?? false) ? (int)Rights.CanRegisterToken : 0;
-            rights |= ((CheckBoxGetCard.IsChecked ?? false) ? (int)Rights.CanGetCardNumber : 0);
-            reg.Rights = rights;
-
-            var response = await client.SendAsync(reg, RequestType.Register);
+            var response = await client.SendAsync(login, RequestType.Login);
 
             if (response.ResponseType == ResponseType.Success)
             {
-                App.Current.Properties["LoggedUser"] = reg.Username;
+                App.Current.Properties["LoggedUser"] = login.Username;
                 this.NavigationService.Navigate(new HomePage());
             }
             else
@@ -67,7 +59,6 @@ namespace BCT.ClientUI.Views
             BtnLogin.IsEnabled = false;
             TextBoxUsername.IsEnabled = false;
             PasswordBoxPassword.IsEnabled = false;
-            PasswordBoxRepeatPassword.IsEnabled = false;
         }
 
         private void UnlockScreen()
@@ -76,7 +67,6 @@ namespace BCT.ClientUI.Views
             BtnLogin.IsEnabled = true;
             TextBoxUsername.IsEnabled = true;
             PasswordBoxPassword.IsEnabled = true;
-            PasswordBoxRepeatPassword.IsEnabled = true;
         }
     }
 }

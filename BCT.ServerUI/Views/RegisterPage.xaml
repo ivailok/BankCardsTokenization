@@ -1,17 +1,17 @@
-﻿<Page x:Class="BCT.ClientUI.Views.RegisterPage"
+﻿<Page x:Class="BCT.ServerUI.Views.RegisterPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:fa="http://schemas.fontawesome.io/icons/"
-      xmlns:local="clr-namespace:BCT.ClientUI.Views"
+      xmlns:local="clr-namespace:BCT.ServerUI.Views"
       mc:Ignorable="d" 
       d:DesignHeight="300" d:DesignWidth="300"
       Title="Register">
-    <Grid>
-        <DockPanel LastChildFill="False">
+    <DockPanel>
+        <DockPanel LastChildFill="False" DockPanel.Dock="Top">
             <TextBlock DockPanel.Dock="Right" Padding="0,0,10,0">
-                <Hyperlink Click="GoToLoginPage">Login</Hyperlink>
+                <Hyperlink Click="GoToExportPage">Export</Hyperlink>
             </TextBlock>
         </DockPanel>
 
@@ -29,9 +29,7 @@
             </Grid.ColumnDefinitions>
 
             <StackPanel Orientation="Vertical" Grid.Row="1" Grid.Column="1">
-
-                <Grid Margin="0,50,0,0" Width="250">
-
+                <Grid Width="250">
                     <Grid.RowDefinitions>
                         <RowDefinition />
                         <RowDefinition />
@@ -62,7 +60,7 @@
                     <Label Grid.Row="4" Grid.Column="0">Get card number:</Label>
                     <CheckBox Name="CheckBoxGetCard" Grid.Row="4" Grid.Column="1" Margin="2,5,2,5"></CheckBox>
 
-                    <TextBlock Name="TextBlockErrorMessage" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Visibility="Collapsed" Foreground="Red" Margin="5,2,0,2"></TextBlock>
+                    <TextBlock Name="TextBlockInfo" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Visibility="Collapsed" Margin="5,2,0,2"></TextBlock>
 
                     <StackPanel Grid.Row="6" Grid.Column="0" Orientation="Horizontal">
                         <Button Name="BtnLogin" Click="Register" Width="50px" Margin="5,0,0,0" Content="Register"/>
@@ -72,5 +70,5 @@
                 <fa:ImageAwesome Name="LoadingSpinner" Margin="0,50,0,0" Visibility="Collapsed" Icon="Refresh" Spin="True" Height="48" Width="48" />
             </StackPanel>
         </Grid>
-    </Grid>
+    </DockPanel>
 </Page>

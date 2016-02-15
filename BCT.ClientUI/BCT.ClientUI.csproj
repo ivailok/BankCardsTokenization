@@ -65,9 +65,6 @@
     <Compile Include="Views\LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\RegisterPage.xaml.cs">
-      <DependentUpon>RegisterPage.xaml</DependentUpon>
-    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -85,10 +82,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\LoginPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\RegisterPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -122,9 +115,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BCT.Client\BCT.Client.csproj">
+    <ProjectReference Include="..\BCT.Client\BCT.ClientCore.csproj">
       <Project>{db0d9316-259a-4d28-bf77-f50681b3b056}</Project>
-      <Name>BCT.Client</Name>
+      <Name>BCT.ClientCore</Name>
     </ProjectReference>
     <ProjectReference Include="..\BCT.Data\BCT.Data.csproj">
       <Project>{9ce20b81-62aa-439f-b1e2-5f390076fbca}</Project>

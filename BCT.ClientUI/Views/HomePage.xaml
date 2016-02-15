@@ -8,9 +8,8 @@
       mc:Ignorable="d" 
       d:DesignHeight="300" d:DesignWidth="300"
       Title="Home">
-
-    <Grid>
-        <DockPanel Name="NavContainer" LastChildFill="False">
+    <DockPanel>
+        <DockPanel LastChildFill="False" DockPanel.Dock="Top">
             <TextBlock Name="TextBlockUsername" DockPanel.Dock="Left" Padding="10,0,0,0"></TextBlock>
             <TextBlock DockPanel.Dock="Right" Padding="0,0,10,0">
                 <Hyperlink Click="Logout">Logout</Hyperlink>
@@ -40,15 +39,22 @@
                     </Grid.RowDefinitions>
 
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition />
-                        <ColumnDefinition />
+                        <ColumnDefinition Width="5*" />
+                        <ColumnDefinition Width="5*" />
+                        <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
 
                     <Label Grid.Row="0" Grid.Column="0">Card ID:</Label>
                     <TextBox Name="TextBoxCardNumber" Grid.Row="0" Grid.Column="1" Margin="2"></TextBox>
+                    <Button Name="BtnResetCardNumber" Grid.Row="0" Grid.Column="2" Click="Clear" BorderThickness="0" Background="White">
+                        <fa:FontAwesome Icon="Close"></fa:FontAwesome>
+                    </Button>
 
                     <Label Grid.Row="1" Grid.Column="0">Token:</Label>
                     <TextBox Name="TextBoxToken" Grid.Row="1" Grid.Column="1" Margin="2"></TextBox>
+                    <Button Name="BtnResetToken" Grid.Row="1" Grid.Column="2" Click="Clear" BorderThickness="0" Background="White">
+                        <fa:FontAwesome Icon="Close"></fa:FontAwesome>
+                    </Button>
 
                     <TextBlock Name="TextBlockError" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Visibility="Collapsed" Foreground="Red" Margin="5,2,0,2"></TextBlock>
 
@@ -61,5 +67,5 @@
                 <fa:ImageAwesome Name="LoadingSpinner" Margin="0,50,0,0" Visibility="Collapsed" Icon="Refresh" Spin="True" Height="48" Width="48" />
             </StackPanel>
         </Grid>
-    </Grid>
+    </DockPanel>
 </Page>

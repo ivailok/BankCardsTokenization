@@ -8,26 +8,6 @@
         mc:Ignorable="d"
         Title="Tokenization" Height="350" Width="525">
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
-
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
-
-        <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical">
-            <DockPanel Width="200" Height="25" LastChildFill="False">
-                <Button Name="BtnExportTokens" DockPanel.Dock="Left" Click="ExportTokens">Export tokens</Button>
-                <Button Name="BtnExportCards" DockPanel.Dock="Right" Click="ExportCards">Export cards</Button>
-            </DockPanel>
-
-            <fa:ImageAwesome Name="LoadingSpinner" Margin="0,50,0,0" Visibility="Collapsed" Icon="Refresh" Spin="True" Height="48" Width="48" />
-        </StackPanel>
-        
+        <Frame Name="MainFrame" NavigationUIVisibility="Hidden"></Frame>
     </Grid>
 </Window>

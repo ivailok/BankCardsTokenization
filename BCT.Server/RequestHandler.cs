@@ -10,7 +10,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace BCT.Server
+namespace BCT.ServerCore
 {
     public class RequestHandler : IDisposable
     {
@@ -31,10 +31,9 @@ namespace BCT.Server
             this.Formatter = new BinaryFormatter();
             this.UsersService = new UsersService();
             this.TokenizationService = new TokenizationService();
+        }
 
-    }
-
-    public void Execute()
+        public void Execute()
         {
             string username;
             if (Authorize(out username))
@@ -143,14 +142,6 @@ namespace BCT.Server
                                 this.UsersService.Login(login);
                                 username = login.Username;
                                 response.Message = "Successfully logged!";
-                                break;
-                            }
-                        case RequestType.Register:
-                            {
-                                var reg = request.Data as Register;
-                                this.UsersService.Register(reg);
-                                username = reg.Username;
-                                response.Message = "Successfully registered!";
                                 break;
                             }
                         case RequestType.Terminate:

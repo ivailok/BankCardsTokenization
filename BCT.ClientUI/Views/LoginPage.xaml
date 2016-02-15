@@ -20,18 +20,9 @@
             <ColumnDefinition Width="Auto"></ColumnDefinition>
             <ColumnDefinition Width="*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        
+
         <StackPanel Orientation="Vertical" Grid.Row="1" Grid.Column="1">
-            <TextBlock Grid.Row="0" TextWrapping="Wrap" Name="textBlockHeading" VerticalAlignment="Top" FontSize="12" FontStyle="Italic" Padding="5">
-                Note: Please login here to view the features of this app. If you are new then
-                <TextBlock>
-                    <Hyperlink Click="GoToRegisterPage" FontSize="14" FontStyle="Normal">register</Hyperlink>
-                </TextBlock>
-                now.
-            </TextBlock>
-
-            <Grid Margin="0,50,0,0" Width="200">
-
+            <Grid Width="200">
                 <Grid.RowDefinitions>
                     <RowDefinition />
                     <RowDefinition />
@@ -59,6 +50,5 @@
 
             <fa:ImageAwesome Name="LoadingSpinner" Margin="0,50,0,0" Visibility="Collapsed" Icon="Refresh" Spin="True" Height="48" Width="48" />
         </StackPanel>
-        
     </Grid>
 </Page>

@@ -1,4 +1,5 @@
-﻿using BCT.ClientUI.Views;
+﻿using BCT.ClientCore;
+using BCT.ClientUI.Views;
 using BCT.Data;
 using System;
 using System.Collections.Generic;
@@ -26,29 +27,21 @@ namespace BCT.ClientUI
         public MainWindow()
         {
             InitializeComponent();
-            
-            Client.Client client = new Client.Client();
+
+            Closed += MainWindow_Closed;
+            Loaded += MainWindow_Loaded;
+        }
+
+        private void MainWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            Client client = new Client();
             App.Current.Properties["Client"] = client;
-
             MainFrame.Navigate(new LoginPage());
-            MainFrame.Navigated += FrameNavigated;
-
-            Closing += WindowClosing;
         }
 
-        void FrameNavigated(object sender, NavigationEventArgs e)
+        private async void MainWindow_Closed(object sender, EventArgs e)
         {
-            // don't save and show history here
-            if (e.Content is LoginPage || e.Content is RegisterPage)
-            {
-                MainFrame.NavigationService.RemoveBackEntry();
-                MainFrame.NavigationUIVisibility = NavigationUIVisibility.Hidden;
-            }
-        }
-
-        async void WindowClosing(object sender, CancelEventArgs e)
-        {
-            var client = App.Current.Properties["Client"] as Client.Client;
+            var client = App.Current.Properties["Client"] as Client;
             var response = await client.SendAsync(null, RequestType.Terminate) as Response;
             if (response.ResponseType == ResponseType.Success)
             {

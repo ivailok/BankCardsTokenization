@@ -9,7 +9,6 @@ namespace BCT.Data
     public enum RequestType
     {
         Login,
-        Register,
         Logout,
         RegisterToken,
         GetCardNumber,

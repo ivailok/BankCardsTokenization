@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BCT.Server", "BCT.Server\BCT.Server.csproj", "{7996A1C3-617B-4228-94FC-673B861B742A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BCT.ServerCore", "BCT.Server\BCT.ServerCore.csproj", "{7996A1C3-617B-4228-94FC-673B861B742A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BCT.Client", "BCT.Client\BCT.Client.csproj", "{DB0D9316-259A-4D28-BF77-F50681B3B056}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BCT.ClientCore", "BCT.Client\BCT.ClientCore.csproj", "{DB0D9316-259A-4D28-BF77-F50681B3B056}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BCT.Data", "BCT.Data\BCT.Data.csproj", "{9CE20B81-62AA-439F-B1E2-5F390076FBCA}"
 EndProject

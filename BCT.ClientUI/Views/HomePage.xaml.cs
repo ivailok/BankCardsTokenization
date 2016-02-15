@@ -1,4 +1,5 @@
-﻿using BCT.Data;
+﻿using BCT.ClientCore;
+using BCT.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,7 +30,7 @@ namespace BCT.ClientUI.Views
 
         private async void Logout(object sender, RoutedEventArgs e)
         {
-            var client = App.Current.Properties["Client"] as Client.Client;
+            var client = App.Current.Properties["Client"] as Client;
 
             var response = await client.SendAsync(null, RequestType.Logout);
 
@@ -44,7 +45,7 @@ namespace BCT.ClientUI.Views
         {
             LockScreen();
 
-            var client = App.Current.Properties["Client"] as Client.Client;
+            var client = App.Current.Properties["Client"] as Client;
 
             var response = await client.SendAsync(TextBoxCardNumber.Text, RequestType.RegisterToken);
             
@@ -65,7 +66,7 @@ namespace BCT.ClientUI.Views
         {
             LockScreen();
 
-            var client = App.Current.Properties["Client"] as Client.Client;
+            var client = App.Current.Properties["Client"] as Client;
 
             var response = await client.SendAsync(TextBoxToken.Text, RequestType.GetCardNumber);
 
@@ -99,6 +100,18 @@ namespace BCT.ClientUI.Views
             BtnConvertToken.IsEnabled = true;
             TextBoxCardNumber.IsEnabled = true;
             TextBoxToken.IsEnabled = true;
+        }
+
+        private void Clear(object sender, RoutedEventArgs e)
+        {
+            if (sender.Equals(BtnResetCardNumber))
+            {
+                TextBoxCardNumber.Text = string.Empty;
+            }
+            else if (sender.Equals(BtnResetToken))
+            {
+                TextBoxToken.Text = string.Empty;
+            }
         }
     }
 }
