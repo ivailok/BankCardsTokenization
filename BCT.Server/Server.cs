@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace BCT.Server
 {
-    public class Server
+    public class Server : IDisposable
     {
         private const string LocalHost = "127.0.0.1";
         private const int Port = 44500;
@@ -43,6 +43,11 @@ namespace BCT.Server
                         request.Execute();
                     }), null);
             }
+        }
+
+        public void Dispose()
+        {
+            Environment.Exit(Environment.ExitCode);
         }
     }
 }

@@ -12,26 +12,27 @@ namespace BCT.Services
     public class XmlFileService
     {
         private string filename;
+        private XmlSerializer xmlSer;
 
-        public XmlFileService(string filename)
+        public XmlFileService(string filename, Type type)
         {
             this.filename = filename;
+            this.xmlSer = new XmlSerializer(type);
         }
 
-        public void Save(object data, Type type)
+        public void Save(object data)
         {
-            XmlSerializer xmlSer = new XmlSerializer(type);
-            TextWriter writer = new StreamWriter(filename);
-            xmlSer.Serialize(writer, data);
-            writer.Close();
+            using (TextWriter writer = new StreamWriter(filename))
+            {
+                this.xmlSer.Serialize(writer, data);
+            }
         }
 
-        public object Load(Type type)
+        public object Load()
         {
-            XmlSerializer xmlSer = new XmlSerializer(type);
             using (FileStream fs = new FileStream(filename, FileMode.Open))
             {
-                return xmlSer.Deserialize(fs);
+                return this.xmlSer.Deserialize(fs);
             }
         }
     }

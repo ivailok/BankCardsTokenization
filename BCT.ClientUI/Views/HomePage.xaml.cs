@@ -47,6 +47,8 @@ namespace BCT.ClientUI.Views
             var client = App.Current.Properties["Client"] as Client.Client;
 
             var response = await client.SendAsync(TextBoxCardNumber.Text, RequestType.RegisterToken);
+            
+            UnlockScreen();
 
             if (response.ResponseType == ResponseType.Success)
             {
@@ -54,7 +56,6 @@ namespace BCT.ClientUI.Views
             }
             else
             {
-                UnlockScreen();
                 TextBlockError.Visibility = Visibility.Visible;
                 TextBlockError.Text = response.Message;
             }
@@ -68,13 +69,14 @@ namespace BCT.ClientUI.Views
 
             var response = await client.SendAsync(TextBoxToken.Text, RequestType.GetCardNumber);
 
+            UnlockScreen();
+
             if (response.ResponseType == ResponseType.Success)
             {
                 TextBoxCardNumber.Text = response.Data as string;
             }
             else
             {
-                UnlockScreen();
                 TextBlockError.Visibility = Visibility.Visible;
                 TextBlockError.Text = response.Message;
             }

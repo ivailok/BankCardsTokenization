@@ -20,13 +20,13 @@ namespace BCT.Services
 
         static TokenizationService()
         {
-            storage = new XmlFileService(CardsFilename);
+            storage = new XmlFileService(CardsFilename, typeof(Card[]));
             cards = new Dictionary<string, Card>();
             randomGenerator = new Random();
 
             if (File.Exists(CardsFilename))
             {
-                var collection = storage.Load(typeof(Card[])) as Card[];
+                var collection = storage.Load() as Card[];
                 foreach (var item in collection)
                 {
                     cards.Add(item.Token, item);
@@ -61,7 +61,7 @@ namespace BCT.Services
             return checksum % 10 == 0;
         }
 
-        public bool ContainsOnlyNumbers(string cardNumber)
+        private bool ContainsOnlyNumbers(string cardNumber)
         {
             return cardNumber.All(x => x >= '0' && x <= '9');
         }
@@ -85,7 +85,7 @@ namespace BCT.Services
                     } while (cards.ContainsKey(possibleToken));
 
                     cards.Add(possibleToken, new Card() { CardNumber = cardNumber, Token = possibleToken });
-                    storage.Save(cards.Values.ToArray(), typeof(Card[]));
+                    storage.Save(cards.Values.ToArray());
                     token = possibleToken;
                 }
 
@@ -156,6 +156,12 @@ namespace BCT.Services
             //generatedToken[i] = Digits[d];
 
             return new string(generatedToken);
+        }
+
+        public List<Card> GetEntries()
+        {
+            List<Card> cardsList = cards.Values.ToList();
+            return cardsList;
         }
     }
 }

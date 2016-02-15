@@ -18,12 +18,12 @@ namespace BCT.Services
 
         static UsersService()
         {
-            storage = new XmlFileService(UsersFilename);
+            storage = new XmlFileService(UsersFilename, typeof(User[]));
             users = new Dictionary<string, User>();
 
             if (File.Exists(UsersFilename))
             {
-                var collection = storage.Load(typeof(User[])) as User[];
+                var collection = storage.Load() as User[];
                 foreach (var item in collection)
                 {
                     users.Add(item.Username, item);
@@ -58,7 +58,7 @@ namespace BCT.Services
                         Password = register.Password,
                         Rights = register.Rights
                     });
-                    storage.Save(users.Values.ToArray(), typeof(User[]));
+                    storage.Save(users.Values.ToArray());
                 }
             }
         }
