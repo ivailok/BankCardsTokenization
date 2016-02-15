@@ -55,6 +55,12 @@ namespace BCT.Server
                                 }
                             case RequestType.RegisterToken:
                                 {
+                                    int rights = this.UsersService.GetRights(username);
+                                    if ((rights & (int)Rights.CanRegisterToken) == 0)
+                                    {
+                                        throw new InvalidOperationException("You don't have rights to do that.");
+                                    }
+
                                     string token;
                                     if (this.TokenizationService.RegisterToken(request.Data as string, out token))
                                     {
@@ -69,6 +75,12 @@ namespace BCT.Server
                                 }
                             case RequestType.GetCardNumber:
                                 {
+                                    int rights = this.UsersService.GetRights(username);
+                                    if ((rights & (int)Rights.CanGetCardNumber) == 0)
+                                    {
+                                        throw new InvalidOperationException("You don't have rights to do that.");
+                                    }
+
                                     string cardNumber = this.TokenizationService.GetCardNumber(request.Data as string);
                                     response.Data = cardNumber;
                                     response.Message = "Successfully taken card number.";

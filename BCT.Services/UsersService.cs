@@ -45,7 +45,6 @@ namespace BCT.Services
 
         public void Register(Register register)
         {
-            lock (users)
             {
                 if (users.ContainsKey(register.Username))
                 {
@@ -62,6 +61,11 @@ namespace BCT.Services
                     storage.Save(users.Values.ToArray(), typeof(User[]));
                 }
             }
+        }
+
+        public int GetRights(string username)
+        {
+            return users[username].Rights;
         }
     }
 }

@@ -1,15 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BCT.Server", "BCT.Server\BCT.Server.csproj", "{7996A1C3-617B-4228-94FC-673B861B742A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BCT.Client", "BCT.Client\BCT.Client.csproj", "{DB0D9316-259A-4D28-BF77-F50681B3B056}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BCT.ServerStart", "BCT.ServerStart\BCT.ServerStart.csproj", "{05D01473-A87C-42C7-A568-D8F36CC5B308}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BCT.ClientStart", "BCT.ClientStart\BCT.ClientStart.csproj", "{EB0CB984-27FE-4CCF-8551-3D885A94F415}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BCT.Data", "BCT.Data\BCT.Data.csproj", "{9CE20B81-62AA-439F-B1E2-5F390076FBCA}"
 EndProject
@@ -18,6 +14,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BCT.ServicesTests", "BCT.ServicesTests\BCT.ServicesTests.csproj", "{7E364F92-22D6-45C1-86CD-89CADB36DE01}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BCT.ClientUI", "BCT.ClientUI\BCT.ClientUI.csproj", "{52081685-11F4-4955-9E6D-9B5A45ED8E9E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BCT.ServerUI", "BCT.ServerUI\BCT.ServerUI.csproj", "{EB4F5B13-535D-4C51-95E7-3DC7358812CE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,14 +31,6 @@ Global
 		{DB0D9316-259A-4D28-BF77-F50681B3B056}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DB0D9316-259A-4D28-BF77-F50681B3B056}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DB0D9316-259A-4D28-BF77-F50681B3B056}.Release|Any CPU.Build.0 = Release|Any CPU
-		{05D01473-A87C-42C7-A568-D8F36CC5B308}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{05D01473-A87C-42C7-A568-D8F36CC5B308}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{05D01473-A87C-42C7-A568-D8F36CC5B308}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{05D01473-A87C-42C7-A568-D8F36CC5B308}.Release|Any CPU.Build.0 = Release|Any CPU
-		{EB0CB984-27FE-4CCF-8551-3D885A94F415}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EB0CB984-27FE-4CCF-8551-3D885A94F415}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EB0CB984-27FE-4CCF-8551-3D885A94F415}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EB0CB984-27FE-4CCF-8551-3D885A94F415}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9CE20B81-62AA-439F-B1E2-5F390076FBCA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9CE20B81-62AA-439F-B1E2-5F390076FBCA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9CE20B81-62AA-439F-B1E2-5F390076FBCA}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -57,6 +47,10 @@ Global
 		{52081685-11F4-4955-9E6D-9B5A45ED8E9E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{52081685-11F4-4955-9E6D-9B5A45ED8E9E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{52081685-11F4-4955-9E6D-9B5A45ED8E9E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EB4F5B13-535D-4C51-95E7-3DC7358812CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB4F5B13-535D-4C51-95E7-3DC7358812CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB4F5B13-535D-4C51-95E7-3DC7358812CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB4F5B13-535D-4C51-95E7-3DC7358812CE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

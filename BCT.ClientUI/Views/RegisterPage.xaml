@@ -57,10 +57,10 @@
                     <PasswordBox Name="PasswordBoxRepeatPassword" Grid.Row="2" Grid.Column="1" Margin="2"></PasswordBox>
 
                     <Label Grid.Row="3" Grid.Column="0">Register token:</Label>
-                    <CheckBox Name="CheckBoxRegisterToken" Grid.Row="3" Grid.Column="1"></CheckBox>
+                    <CheckBox Name="CheckBoxRegisterToken" Grid.Row="3" Grid.Column="1" Margin="2,5,2,5"></CheckBox>
 
                     <Label Grid.Row="4" Grid.Column="0">Get card number:</Label>
-                    <CheckBox Name="CheckBoxGetCard" Grid.Row="4" Grid.Column="1"></CheckBox>
+                    <CheckBox Name="CheckBoxGetCard" Grid.Row="4" Grid.Column="1" Margin="2,5,2,5"></CheckBox>
 
                     <TextBlock Name="TextBlockErrorMessage" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Visibility="Collapsed" Foreground="Red" Margin="5,2,0,2"></TextBlock>
 
