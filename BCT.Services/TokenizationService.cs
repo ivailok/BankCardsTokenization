@@ -101,9 +101,10 @@ namespace BCT.Services
                 !ContainsOnlyNumbers(token) ||
                 token.Length != CardLength ||
                 token[0] == '0' ||
-                (token[0] >= '3' && token[0] <= '6'))
+                (token[0] >= '3' && token[0] <= '6') ||
+                token.Sum(c => c - '0') % 10 == 0)
             {
-                throw new ArgumentException("Invalid token.");
+                throw new FormatException("Invalid token.");
             }
 
             lock (cards)
@@ -146,6 +147,7 @@ namespace BCT.Services
                     d = randomGenerator.Next(0, 10);
                 } while (Digits[d] == cardNumber[i]);
                 generatedToken[i] = Digits[d];
+                digitsSum += d;
             }
             
             do

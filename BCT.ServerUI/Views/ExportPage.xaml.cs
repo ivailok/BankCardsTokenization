@@ -103,7 +103,7 @@ namespace BCT.ServerUI.Views
 
             using (StreamWriter sw = new StreamWriter(filename))
             {
-                await sw.WriteLineAsync(string.Format("{0,-16} - Tokens", "Card number", "Card number"));
+                await sw.WriteLineAsync(string.Format("{0,-16} - Tokens", "Card number"));
                 foreach (var group in cardsList)
                 {
                     hasPrevious = false;

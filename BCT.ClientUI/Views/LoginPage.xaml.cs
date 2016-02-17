@@ -22,33 +22,53 @@ namespace BCT.ClientUI.Views
     /// </summary>
     public partial class LoginPage : Page
     {
+        private SHA256Hasher hasher;
+        private Validator validator;
+
         public LoginPage()
         {
             InitializeComponent();
+
+            Loaded += LoginPage_Loaded;
         }
 
+        private void LoginPage_Loaded(object sender, RoutedEventArgs e)
+        {
+            this.hasher = new SHA256Hasher();
+            this.validator = new Validator();
+        }
+        
         private async void Login(object sender, RoutedEventArgs e)
         {
             LockScreen();
 
             var client = App.Current.Properties["Client"] as Client;
 
-            Login login = new Login();
-            login.Username = TextBoxUsername.Text;
-            login.Password = PasswordBoxPassword.Password;
-            
-            var response = await client.SendAsync(login, RequestType.Login);
-
-            if (response.ResponseType == ResponseType.Success)
+            if (Validate())
             {
-                App.Current.Properties["LoggedUser"] = login.Username;
-                this.NavigationService.Navigate(new HomePage());
+                Login login = new Login();
+                login.Username = TextBoxUsername.Text;
+                login.Password = this.hasher.ComputeHash(PasswordBoxPassword.Password);
+
+                var response = await client.SendAsync(login, RequestType.Login);
+
+                if (response.ResponseType == ResponseType.Success)
+                {
+                    App.Current.Properties["LoggedUser"] = login.Username;
+                    this.NavigationService.Navigate(new HomePage());
+                }
+                else
+                {
+                    UnlockScreen();
+                    TextBlockErrorMessage.Visibility = Visibility.Visible;
+                    TextBlockErrorMessage.Text = response.Message;
+                }
             }
             else
             {
                 UnlockScreen();
                 TextBlockErrorMessage.Visibility = Visibility.Visible;
-                TextBlockErrorMessage.Text = response.Message;
+                TextBlockErrorMessage.Text = "Invalid format of username or pass";
             }
         }
 
@@ -67,6 +87,12 @@ namespace BCT.ClientUI.Views
             BtnLogin.IsEnabled = true;
             TextBoxUsername.IsEnabled = true;
             PasswordBoxPassword.IsEnabled = true;
+        }
+
+        private bool Validate()
+        {
+            return this.validator.ValidateUsername(TextBoxUsername.Text) &&
+                   this.validator.ValidatePassword(PasswordBoxPassword.Password);
         }
     }
 }
